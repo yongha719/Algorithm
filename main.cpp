@@ -1,4 +1,4 @@
-﻿#include <assert.h>
+#include <assert.h>
 #include <iostream>
 #include <string.h>
 
@@ -6,9 +6,15 @@
 
 using namespace std;
 
+enum Order
+{
+	Order_Exit, Order_Add, Order_Remove, Order_Print
+};
+
+
 int main()
 {
-	string input;
+	int input;
 	int num;
 
 	while (true)
@@ -16,8 +22,13 @@ int main()
 		cin >> input;
 		cout << '\n';
 
-		if (input == "1") {
-			cout << "추가할 정수 값을 입력해주세요";
+		if (input == Order_Exit) {
+			cout << "프로그램을 종료합니다.";
+			break;
+		}
+
+		if (input == Order_Add) {
+			cout << "추가할 정수 값을 입력해주세요 : ";
 			cin >> num;
 			cin.clear();
 
@@ -30,10 +41,25 @@ int main()
 			continue;
 		}
 
-		if (input == "2")
+		if (input == Order_Remove)
 		{
-			PrintNodes();
+			cout << "삭제할 정수 값을 입력해주세요 : ";
+			cin >> num;
+			cin.clear();
+
+			if (Remove(num) == false) {
+				cout << "삭제할 노드는 존재하지 않는 값입니다.\n";
+			}
+
+			continue;
 		}
+
+		if (input == Order_Print) {
+			PrintNodes();
+			continue;
+		}
+
+		cout << "잘못된 숫자를 입력하셨습니다.\n";
 	}
 
 	return 0;

@@ -1,9 +1,9 @@
-﻿#include <iostream>
+#include <iostream>
 #include <assert.h>
 
 #include "DoubleLinkedList.h"
 
-Node* head = nullptr;
+/*Node* head = nullptr;
 Node* curnode = nullptr;
 
 Node* Add(Node* const node)
@@ -43,3 +43,8 @@ void PrintNodes()
 		}
 	}
 }
+
+bool Contains(Node* node)
+{
+	return false;
+}*/
