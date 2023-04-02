@@ -12,6 +12,7 @@ struct Node
 		prevnode = nullptr;
 		nextnode = nullptr;
 	}
+
 };
 
 template <typename T>
@@ -22,32 +23,36 @@ private:
 	Node<T>* tail;
 	int size = 0;
 
-public:
+	Node<T>* FindByIndex(int index);
+	Node<T>* FindByData(T data);
 
+public:
 	DoubleLinkedList() {
 		head = nullptr;
 		tail = nullptr;
 	}
 
 	~DoubleLinkedList() {
-		Node<T>* deletenode = nullptr;
-
-		while (head->nextnode != nullptr)
-		{
-			deletenode = head;
-			head = head->nextnode;
-			delete deletenode;
-		}
+		Clear();
 	}
 
 	int Length() {
 		return size;
 	}
 
+	void Add(T data);
+	void Add(T data, int index);
+	void Remove(T data);
+	void RemoveAt(int data);
+	void Clear();
+
+	T operator [](int data) {
+		Node<T>* indexnode = head;
+
+		for (int i = 0; i < data; i++) {
+			indexnode = indexnode->nextnode;
+		}
+
+		return indexnode->data;
+	}
 };
-
-
-//Node* Add(Node* node);
-//void Remove(int node);
-//void PrintNodes();
-//bool Contains(Node* node);

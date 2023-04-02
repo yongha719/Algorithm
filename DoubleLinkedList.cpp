@@ -3,48 +3,164 @@
 
 #include "DoubleLinkedList.h"
 
-/*Node* head = nullptr;
-Node* curnode = nullptr;
+// c++ 예외 클래스
+// https://learn.microsoft.com/ko-kr/cpp/standard-library/stdexcept?view=msvc-170
 
-Node* Add(Node* const node)
+template<typename T>
+Node<T>* DoubleLinkedList<T>::FindByIndex(int index)
 {
-	// 현재 노드가 NULL이 아닐때
-	if (curnode != nullptr) {
-		curnode->nextnode = node;
-		curnode->prevnode = curnode;
-		curnode = node;
-		return curnode;
-	}
+	if (index < 0 && size < index)
+		throw std::invalid_argument("index is negative");
 
-	// 처음 들어오는 노드이므로 초기화
-	if (head == nullptr) {
-		head = node;
-		curnode = head;
-		return curnode;
-	}
+	Node<T*> findnode = head;
 
-	// 추가 못 할시 nullptr 반환하고 그냥 리턴
-	return nullptr;
+	int i;
+	for (i = 0; i < index && findnode != nullptr; i++)
+		findnode = findnode->nextnode;
+
+	if (i != index)
+		throw std::out_of_range("index is out of range");
+
+	return findnode;
 }
 
-//template <typename T>
-void Remove(int node)
+template<typename T>
+Node<T>* DoubleLinkedList<T>::FindByData(T data)
 {
+	Node<T>* findnode = head;
 
+	while (findnode != nullptr && findnode->data != data)
+		findnode = findnode->nextnode;
+
+	return findnode;
 }
 
-void PrintNodes()
-{
+template <typename T>
+void DoubleLinkedList<T>::Add(T data) {
+	Node<T>* newnode = new Node<T>(data);
+
 	if (head != nullptr) {
-		Node* printnode = head;
-		while (printnode->nextnode != nullptr) {
-			std::cout << printnode->data << '\n';
-			printnode = printnode->nextnode;
+		tail->nextnode = newnode;
+		newnode->prevnode = tail;
+		tail = newnode;
+	}
+	else {
+		head = newnode;
+		tail = newnode;
+	}
+
+	size++;
+}
+
+template<typename T>
+void DoubleLinkedList<T>::Add(T data, int index)
+{
+	Node<T>* newnode = new Node<T>(data);
+
+	if (head != nullptr) {
+		if (index == 0) {
+			newnode->nextnode = head;
+			head->prevnode = newnode;
+			head = newnode;
+		}
+		else if (index >= size) {
+			newnode->prevnode = tail;
+			tail->nextnode = newnode;
+			tail = newnode;
+		}
+		else {
+			Node<T>* prevnode = FindByIndex(index - 1);
+			Node<T>* nextnode = prevnode->nextnode;
+
+			prevnode->nextnode = newnode;
+			newnode->prevnode = prevnode;
+
+			newnode->nextnode = nextnode;
+			nextnode->prevnode = newnode;
 		}
 	}
+	else {
+		head = newnode;
+		tail = newnode;
+	}
+
+	size++;
 }
 
-bool Contains(Node* node)
+template<typename T>
+void DoubleLinkedList<T>::Remove(T data)
 {
-	return false;
-}*/
+	Node<T>* removenode = head;
+
+	while (removenode != nullptr && removenode->data != data)
+		removenode = removenode->nextnode;
+
+	if (removenode == nullptr)
+		return;
+
+	if (removenode == head) {
+		head = removenode->nextnode;
+
+		if (head != nullptr)
+			head->prevnode = nullptr;
+	}
+	else {
+		// 가독성 너무 별론데
+		removenode->prevnode->nextnode = removenode->nextnode;
+
+		if (removenode->nextnode != nullptr)
+			removenode->nextnode->prevnode = removenode->prevnode;
+	}
+
+	delete removenode;
+}
+
+template<typename T>
+void DoubleLinkedList<T>::RemoveAt(int data)
+{
+	Node<T>* removenode = FindByIndex(data);
+
+	if (removenode == nullptr)
+		return;
+
+	if (removenode == head) {
+		head = removenode->nextnode;
+
+		if (head != nullptr)
+			head->prevnode = nullptr;
+	}
+	else {
+		removenode->prevnode->nextnode = removenode->nextnode;
+
+		if (removenode->nextnode != nullptr)
+			removenode->nextnode->prevnode = removenode->prevnode;
+	}
+
+	delete removenode;
+	removenode = nullptr;
+}
+
+template<typename T>
+void DoubleLinkedList<T>::Clear()
+{
+	Node<T>* deletenode = nullptr;
+
+	while (head != nullptr && head->nextnode != nullptr)
+	{
+		deletenode = head;
+		head = head->nextnode;
+		head->prevnode = nullptr;
+		delete deletenode;
+		deletenode = nullptr;
+	}
+
+	if (head != nullptr) {
+		delete head;
+		head = nullptr;
+	}
+
+	tail = nullptr;
+}
+
+
+
