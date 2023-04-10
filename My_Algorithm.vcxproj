@@ -131,13 +131,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DoubleLinkedList.h" />
-    <ClInclude Include="Lib\include\array.h" />
-    <ClInclude Include="Lib\include\dictionary.h" />
-    <ClInclude Include="Lib\include\double_linked_list.h" />
-    <ClInclude Include="Lib\include\error_code.h" />
-    <ClInclude Include="Lib\include\hash_table.h" />
-    <ClInclude Include="Lib\include\queue.h" />
-    <ClInclude Include="Lib\include\stack.h" />
     <ClInclude Include="MergeSort.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

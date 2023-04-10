@@ -8,7 +8,9 @@ void Merge(DoubleLinkedList<T>& list, int left, int right)
 {
 	int mid = (left + right) / 2;
 
-	int temp[100]{ 0, };
+	cout << "length " << right << '\n';
+
+	int* temp = new int[right - left + 1];
 
 	int l = left;
 	int m = mid + 1;
