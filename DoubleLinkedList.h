@@ -47,10 +47,19 @@ public:
 	void Clear();
 
 	T& operator [](const int index) {
-		Node<T>* indexnode = head;
+		Node<T>* indexnode;
 
-		for (int i = 0; i < index; i++) {
-			indexnode = indexnode->nextnode;
+		if (index <= size) {
+			indexnode = = head;
+			for (int i = 0; i < index; i++) {
+				indexnode = indexnode->nextnode;
+			}
+		}
+		else {
+			indexnode = tail;
+			for (int i = 0; i < size - index; i++) {
+				indexnode = indexnode->prevnode;
+			}
 		}
 
 		return indexnode->data;
