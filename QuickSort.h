@@ -1,12 +1,6 @@
 #pragma once
 #include "DoubleLinkedList.h"
-
-template <typename T>
-void swap(T& lhs, T& rhs) {
-	T temp = lhs;
-	lhs = rhs;
-	rhs = temp;
-}
+#include "utility.h"
 
 template <typename T>
 int partition(DoubleLinkedList<T>& list, int left, int right) {

@@ -14,13 +14,9 @@ int main()
 
 	mergesort(list, 0, list.Length() - 1);
 
-	quicksort(list);
-
 	for (int i = 0; i < list.Length(); i++) {
 		cout << list[i] << '\n';
 	}	
-
-	system("pause");
 
 	return 0;
 }

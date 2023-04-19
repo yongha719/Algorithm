@@ -47,22 +47,26 @@ public:
 	void Clear();
 
 	T& operator [](const int index) {
-		Node<T>* indexnode;
+		//return FindByIndex(index)->data;
+		if (index >= size)
+			throw std::out_of_range("index is out of range");
 
-		if (index <= size) {
-			indexnode = = head;
+		Node<T>* findnode;
+
+		if (index <= (size / 2)) {
+			findnode = head;
 			for (int i = 0; i < index; i++) {
-				indexnode = indexnode->nextnode;
+				findnode = findnode->nextnode;
 			}
 		}
 		else {
-			indexnode = tail;
+			findnode = tail;
 			for (int i = 0; i < size - index; i++) {
-				indexnode = indexnode->prevnode;
+				findnode = findnode->prevnode;
 			}
 		}
 
-		return indexnode->data;
+		return findnode->data;
 	}
 
 	DoubleLinkedList<T>& operator=(std::initializer_list<T> list) {
@@ -79,17 +83,23 @@ public:
 template<typename T>
 Node<T>* DoubleLinkedList<T>::FindByIndex(int index)
 {
-	if (index < 0 && size < index)
-		throw std::invalid_argument("index is negative");
-
-	Node<T>* findnode = head;
-
-	int i;
-	for (i = 0; i < index && findnode != nullptr; i++)
-		findnode = findnode->nextnode;
-
-	if (i != index)
+	if (index >= size)
 		throw std::out_of_range("index is out of range");
+
+	Node<T>* findnode;
+
+	if (index <= (size / 2)) {
+		findnode = head;
+		for (int i = 0; i < index; i++) {
+			findnode = findnode->nextnode;
+		}
+	}
+	else {
+		findnode = tail;
+		for (int i = 0; i < size - index; i++) {
+			findnode = findnode->prevnode;
+		}
+	}
 
 	return findnode;
 }

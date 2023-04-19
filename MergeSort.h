@@ -1,16 +1,15 @@
 #pragma once
-#include <iostream>
-
 #include "DoubleLinkedList.h"
+#include "utility.h"
 
 template <typename T>
 void merge(DoubleLinkedList<T>& list, int left, int right)
 {
 	int mid = (left + right) / 2;
 
-	std::cout << "length " << right << '\n';
+	std::cout << "size " << right - left << '\n';
 
-	int* temp = new int[right - left + 1];
+	int* temp = new int[right + 1];
 
 	int l = left;
 	int m = mid + 1;
@@ -21,24 +20,26 @@ void merge(DoubleLinkedList<T>& list, int left, int right)
 	while (l <= mid && m <= right)
 	{
 		if (list[l] <= list[m]) {
-			temp[i++] = list[l++];
+			swap(list[i++], list[l++]);
 		}
 		else {
-			temp[i++] = list[m++];
+			swap(list[i++], list[m++]);
 		}
 	}
 
 	while (l <= mid)
-		temp[i++] = list[l++];
+		swap(list[i++], list[l++]);
 	while (m <= right)
-		temp[i++] = list[m++];
+		swap(list[i++], list[m++]);
 
 
-	while (left <= right)
+	/*while (left <= right)
 	{
 		list[left] = temp[left];
 		left++;
-	}
+	}*/
+
+	delete[] temp;
 }
 
 template <typename T>
